@@ -15,6 +15,7 @@ let x1 = 0;
 let x2;
 let scrollSpeed = 5;
 let start = false;
+let canvasWidth;
 
 function preload() {
   angryRockImg = loadImage('rock1-1.png')
@@ -26,7 +27,8 @@ function preload() {
 }
 
 function setup() {
-  let cnv = createCanvas(windowWidth, 450);
+  canvasWidth = min(windowWidth,800)
+  let cnv = createCanvas(canvasWidth, 450);
   var x = (windowWidth - width) / 2;
   var y = (windowHeight - height) / 2;
   cnv.position(x, y);
@@ -42,10 +44,10 @@ function setup() {
 
   x2 = width
   timer = createP('0')
-  timer.position(width - 40, ((windowHeight - 450) / 2) + 20)
+  timer.position(windowWidth/2 + canvasWidth/2.8 + 70, ((windowHeight - 450) / 2) + 20)
 
   score = createP('Score: ')
-  score.position(width - 105, ((windowHeight - 450) / 2) + 20)
+  score.position(windowWidth/2 + canvasWidth/2.8, ((windowHeight - 450) / 2) + 20)
 
   //jump = createButton('Jump!')
   //jump.style('font-size', '14px')
@@ -78,6 +80,10 @@ function mouseClicked() {
   start = true;
 }
 
+function touchStarted() {
+  runner.jump();
+  start = true;
+}
 
 function timeIt() {
   timer.html(counter)
@@ -128,13 +134,13 @@ function draw() {
 
         gameOver = createButton('Game Over')
         gameOver.style('font-size', '48px')
-        gameOver.position((windowWidth - 433) / 2, (windowHeight - 120) / 2)
+        gameOver.position((windowWidth - canvasWidth/2) / 2, (windowHeight - 120) / 2)
         gameOver.attribute('class', 'buttonB')
 
 
         startButton = createButton('Try Again?')
         startButton.style('font-size', '14px')
-        startButton.position(30, ((windowHeight - 450) / 2) + 30)
+        startButton.position(windowWidth/2 - canvasWidth/2.2, ((windowHeight - 450) / 2) + 30)
         startButton.attribute('class', 'buttonA')
         startButton.mousePressed(restart)
         noLoop();
