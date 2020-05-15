@@ -14,6 +14,7 @@ let interval;
 let x1 = 0;
 let x2;
 let scrollSpeed = 5;
+let start = false;
 
 function preload() {
   angryRockImg = loadImage('rock1-1.png')
@@ -25,13 +26,36 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(800, 450);
-  timer = createP('0')
-  timer.position(width - 40, 20)
-  x2 = width
-  restart()
+  let cnv = createCanvas(windowWidth, 450);
+  var x = (windowWidth - width) / 2;
+  var y = (windowHeight - height) / 2;
+  cnv.position(x, y);
 
+  title = createP('Trail Runnin\'')
+  title.style('color', '#C2D74A')
+  title.style('font-size', '50px')
+  title.position((windowWidth - 320) / 2, (windowHeight - 725) / 2)
+
+  instructions = createP('click or tap to begin...')
+  instructions.style('color', '#C2D74A')
+  instructions.position((windowWidth - 170) / 2, (windowHeight + 480) / 2)
+
+  x2 = width
+  timer = createP('0')
+  timer.position(width - 40, ((windowHeight - 450) / 2) + 20)
+
+  score = createP('Score: ')
+  score.position(width - 105, ((windowHeight - 450) / 2) + 20)
+
+  //jump = createButton('Jump!')
+  //jump.style('font-size', '14px')
+  //jump.position((windowWidth-55)/2, (windowHeight + 525)/2)
+  //jump.attribute('class', 'buttonJump')
+
+  restart()
 }
+
+
 
 function restart() {
   runner = new Runner();
@@ -43,65 +67,79 @@ function restart() {
 
   if (startButton) {
     startButton.remove()
+    gameOver.remove()
   }
 }
 
-function keyPressed() {
-  if (key == ' ') {
-    runner.jump();
-  }
 
+
+function mouseClicked() {
+  runner.jump();
+  start = true;
 }
+
 
 function timeIt() {
   timer.html(counter)
+  if (start){
   counter++
+  }
 }
 
 
+
 function draw() {
-  scrollSpeed = 5 + .5*(counter/25);
-  count += 1
-  if ((random(1) < 0.01 + .005 * (counter / 25)) && (count > 85 - counter / 5)) {
-    count = 0;
-    if (random(1) < .7) {
-      rocks.push(new Rock());
-    } else {
-      rocks.push(new Rock2());
-    }
-  }
-  //background(backgroundImg);
-  image(backgroundImg, x1,0, width, height)
-  image(backgroundImg, x2,0, width, height)
-  x1 -= scrollSpeed
-  x2 -= scrollSpeed
-  if(x1 < -width){
-    x1 = width
-  }
-  if(x2 < -width){
-    x2 = width
-  }
+  image(backgroundImg, x1, 0, width, height)
+  image(backgroundImg, x2, 0, width, height)
   runner.show();
-  runner.move();
-
-
-  for (let r of rocks) {
-    r.move(counter)
-    r.show();
-    if (runner.hits(r)) {
-      gameover = new Gameover()
-      clearInterval(interval)
-      gameover.show()
-      startButton = createButton('Try Again?')
-      startButton.position(20, 40)
-      startButton.style('font-size', '20px')
-      startButton.style('background-color', '#24B349')
-      startButton.style('border-color', '#033304')
-      startButton.style('color', '#033304')
-      startButton.mousePressed(restart)
-      noLoop();
+  if (start) {
+    instructions.remove()
+    scrollSpeed = 5 + .5 * (counter / 25);
+    count += 1
+    if ((random(1) < 0.01 + .005 * (counter / 25)) && (count > 85 - counter / 5)) {
+      count = 0;
+      if (random(1) < .7) {
+        rocks.push(new Rock());
+      } else {
+        rocks.push(new Rock2());
+      }
     }
+
+    //image(backgroundImg, x1, 0, width, height)
+    //image(backgroundImg, x2, 0, width, height)
+    x1 -= scrollSpeed
+    x2 -= scrollSpeed
+    if (x1 < -width) {
+      x1 = width
+    }
+    if (x2 < -width) {
+      x2 = width
+    }
+    //runner.show();
+    runner.move();
+
+
+    for (let r of rocks) {
+      r.move(counter)
+      r.show();
+      if (runner.hits(r)) {
+        gameover = new Gameover()
+        clearInterval(interval)
+
+        gameOver = createButton('Game Over')
+        gameOver.style('font-size', '48px')
+        gameOver.position((windowWidth - 433) / 2, (windowHeight - 120) / 2)
+        gameOver.attribute('class', 'buttonB')
+
+
+        startButton = createButton('Try Again?')
+        startButton.style('font-size', '14px')
+        startButton.position(30, ((windowHeight - 450) / 2) + 30)
+        startButton.attribute('class', 'buttonA')
+        startButton.mousePressed(restart)
+        noLoop();
+      }
+    }
+
   }
-
-
 }

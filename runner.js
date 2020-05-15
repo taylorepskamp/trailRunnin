@@ -15,7 +15,7 @@ class Runner {
   }
   
   hits(rock){
-    return collideRectRect(this.x,this.y,this.r-20,this.r-20,rock.x,rock.y,rock.r,rock.r)
+    return collideRectRect(this.x,this.y,this.r-30,this.r-30,rock.x,rock.y,rock.r,rock.r)
   
   }
   
