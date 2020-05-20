@@ -29,6 +29,8 @@ function preload() {
 function setup() {
   canvasWidth = min(windowWidth,800)
   let cnv = createCanvas(canvasWidth, 450);
+  cnv.style('border-radius', '10px');
+  cnv.style('box-shadow','7px 7px #002101')
   var x = (windowWidth - width) / 2;
   var y = (windowHeight - height) / 2;
   cnv.position(x, y);
@@ -45,8 +47,9 @@ function setup() {
   x2 = width
   timer = createP('0')
   timer.position(windowWidth/2 + canvasWidth/2.8 + 70, ((windowHeight - 450) / 2) + 20)
-
+  timer.style('font-size', '14px')
   score = createP('Score: ')
+  score.style('font-size', '14px')
   score.position(windowWidth/2 + canvasWidth/2.8, ((windowHeight - 450) / 2) + 20)
 
   //jump = createButton('Jump!')
