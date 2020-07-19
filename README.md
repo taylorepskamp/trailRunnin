@@ -8,7 +8,7 @@ A simple game where a "runner" must jump over oncoming rocks.
 
 ## About
 
-The inspiration for this app came from the internet-outage dinosaur chrome game. It was a lot of fun to think through the various features that would make this game fun to play. Very quickly one realizes that even basic games like the dinosaur chrome game require a suprising amount of functionality needed in order to make the game fair, repeatable, and challenging. 
+The inspiration for this app came from the internet-outage dinosaur chrome game. It was a lot of fun to think through the various features that would make this game actually playable. Very quickly one realizes that even basic games like the dinosaur chrome game require a suprising amount of functionality needed in order to make the game fair, repeatable, and challenging. 
 
 ## Challenges
 
